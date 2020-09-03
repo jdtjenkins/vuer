@@ -29,6 +29,10 @@
 		<button
 			type="button"
 			name="save"
+			@click="showModal('import-export')">Share</button>
+		<button
+			type="button"
+			name="save"
 			@click="showModal('save-board')">Save</button>
 		<button
 			type="button"
@@ -38,7 +42,7 @@
 			type="button"
 			name="version"
 			class="version"
-			@click="showModal('changelog')">v2.0.2</button>
+			@click="showModal('changelog')">v2.1.0</button>
 
 		<!-- Modals -->
 		<teleport to="#modals">
@@ -61,6 +65,11 @@
 					</template>
 				</vuer-changelog>
 			</vuer-modal>
+			<vuer-modal name="import-export">
+				<import-export
+					@done="hideModal('import-export')"
+				/>
+			</vuer-modal>
 		</teleport>
 	</nav>
 </template>
@@ -77,6 +86,7 @@
 	import ChangelogComponent from '../changelog.component.vue';
 	import SaveBoardComponent from './save-board.component.vue';
 	import LoadBoardComponent from './load-board.component.vue';
+	import ImportExportComponent from './import-export.component.vue';
 
 	export default {
 		name: 'nav-component',
@@ -85,6 +95,7 @@
 			'vuer-changelog': ChangelogComponent,
 			'save-board': SaveBoardComponent,
 			'load-board': LoadBoardComponent,
+			'import-export': ImportExportComponent,
 		},
 		props: [
 			'layout',
