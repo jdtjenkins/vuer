@@ -32,7 +32,7 @@ jobs:
         run: npm run build
 
       - name: aws s3 sync
-        run: aws s3 sync ./dist s3://vuer.xyz --delete
+        run: aws s3 sync ./dist s3://vuer.xyz --delete --acl="public-read"
 
       - name: invalidate cloudfront
         run: aws cloudfront create-invalidation --distribution-id E3LGVFVT15EETC --paths "/service-worker.js" "/index.html" "/_assets/*"
