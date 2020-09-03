@@ -108,8 +108,6 @@
 	// Components
 	import PlatformComponent from './platforms/platform.component.vue';
 	import VuerModal from '../modal.component.vue';
-import { DH_NOT_SUITABLE_GENERATOR } from 'constants';
-
 
 	interface LinkWithRedditLink extends FullLink {
 		redditLink?: string;
