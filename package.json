@@ -8,7 +8,7 @@
 		"test": "jest",
 		"test:watch": "jest --watchAll",
 		"test:e2e": "concurrently \"npm:start\" \"cypress open\"",
-		"service-worker": "npx workbox injectManifest workbox-config.js && npx rollup -c rollup.config.js"
+		"service-worker": "npx workbox injectManifest workbox-config.js && npx rollup -c \"rollup.config.js\""
 	},
 	"dependencies": {
 		"axios": "^0.19.2",
