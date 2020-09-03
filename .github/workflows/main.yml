@@ -17,10 +17,13 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-        env: # Or as an environment variable
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
 
       - name: npm install
         run: npm install
@@ -29,7 +32,7 @@ jobs:
         run: npm run build
 
       - name: aws s3 sync
-        run: aws s3 sync ./dist s3://vuer.xyz
+        run: aws s3 sync ./dist s3://vuer.xyz --delete --acl="public-read"
 
       - name: invalidate cloudfront
         run: aws cloudfront create-invalidation --distribution-id E3LGVFVT15EETC --paths "/service-worker.js" "/index.html" "/_assets/*"
