@@ -1,0 +1,30 @@
+{
+	"name": "vuer",
+	"version": "0.0.0",
+	"scripts": {
+		"start": "npm run dev",
+		"dev": "vite",
+		"build": "vite build && npm run service-worker",
+		"test": "jest",
+		"test:watch": "jest --watchAll",
+		"test:e2e": "concurrently \"npm:start\" \"cypress open\"",
+		"service-worker": "npx workbox injectManifest workbox-config.js"
+	},
+	"dependencies": {
+		"axios": "^0.19.2",
+		"vue": "^3.0.0-rc.1"
+	},
+	"devDependencies": {
+		"@testing-library/vue": "^5.0.4",
+		"@types/jest": "^26.0.9",
+		"@vue/compiler-sfc": "^3.0.0-rc.1",
+		"concurrently": "^5.3.0",
+		"cypress": "^5.0.0",
+		"jest": "^26.4.0",
+		"sass": "^1.26.10",
+		"ts-jest": "^26.2.0",
+		"typescript": "^3.9.7",
+		"vite": "^1.0.0-rc.4",
+		"workbox-cli": "^5.1.3"
+	}
+}
