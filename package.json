@@ -8,7 +8,7 @@
 		"test": "jest",
 		"test:watch": "jest --watchAll",
 		"test:e2e": "concurrently \"npm:start\" \"cypress open\"",
-		"service-worker": "npx workbox injectManifest workbox-config.js && npx rollup -c \"rollup.config.js\""
+		"service-worker": "npx rollup -c \"rollup.config.js\""
 	},
 	"dependencies": {
 		"axios": "^0.19.2",
@@ -23,6 +23,7 @@
 		"cypress": "^5.0.0",
 		"jest": "^26.4.0",
 		"rollup-plugin-terser": "^7.0.1",
+		"rollup-plugin-workbox": "^5.2.1",
 		"sass": "^1.26.10",
 		"ts-jest": "^26.2.0",
 		"typescript": "^3.9.7",
