@@ -41,6 +41,12 @@
 				<button @click="forward">
 					<i>👉</i>
 				</button>
+				<button @click="stop" v-if="data.timer">
+					<i>Stop</i>
+				</button>
+				<button @click="start" v-if="!data.timer">
+					<i>Start</i>
+				</button>
 			</div>
 			<div class="mobile">
 				<button @click="showSettingsModal">
@@ -70,6 +76,12 @@
 								<button @click="forward">
 									Next <i>👉</i>
 								</button>
+								<button @click="stop" v-if="data.timer">
+									<i>Stop</i>
+								</button>
+								<button @click="start" v-if="!data.timer">
+									<i>Start</i>
+								</button>
 								<button class="close" @click.prevent.self="hideSettingsModal">
 									Close
 								</button>
@@ -96,6 +108,7 @@
 	// Components
 	import PlatformComponent from './platforms/platform.component.vue';
 	import VuerModal from '../modal.component.vue';
+import { DH_NOT_SUITABLE_GENERATOR } from 'constants';
 
 
 	interface LinkWithRedditLink extends FullLink {
@@ -171,9 +184,7 @@
 			}
 
 			const setTimer = (time = 10000) => {
-				if (data.timer) {
-					clearInterval(data.timer);
-				}
+				stop();
 
 				data.timer = setInterval(async () => {
 					await forward();
@@ -197,6 +208,17 @@
 				data.currentCount++;
 
 				setTimer();
+			}
+
+			const start = async () => {
+				setTimer();
+			}
+
+			const stop = async () => {
+				if (data.timer) {
+					clearInterval(data.timer);
+					data.timer = null;
+				}
 			}
 
 			const currentLink = computed(() => {
@@ -225,6 +247,8 @@
 				data,
 				back,
 				forward,
+				stop,
+				start,
 				currentLink: readonly(currentLink),
 				settingsModalName,
 				showSettingsModal,
