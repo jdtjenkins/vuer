@@ -29,7 +29,9 @@ jobs:
         run: npm install
 
       - name: build
-        run: npm run build
+        run: |
+          npm run build
+          npm run service-worker
 
       - name: stuff
         run: ls dist
@@ -38,4 +40,4 @@ jobs:
         run: aws s3 sync ./dist s3://vuer.xyz --delete --acl="public-read"
 
       - name: invalidate cloudfront
-        run: aws cloudfront create-invalidation --distribution-id E3LGVFVT15EETC --paths "/service-worker.js" "/index.html" "/_assets/*"
+        # run: aws cloudfront create-invalidation --distribution-id E3LGVFVT15EETC --paths "/service-worker.js" "/index.html" "/_assets/*"
