@@ -31,6 +31,9 @@ jobs:
       - name: build
         run: |
           npm run build
+          
+      - name: testt
+        run: |
           npm run service-worker
 
       - name: stuff
