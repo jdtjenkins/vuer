@@ -32,7 +32,7 @@ jobs:
         run: npm run build
 
       - name: stuff
-        run: ls
+        run: ls dist
 
       - name: aws s3 sync
         run: aws s3 sync ./dist s3://vuer.xyz --delete --acl="public-read"
