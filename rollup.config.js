@@ -4,7 +4,8 @@ import { terser } from "rollup-plugin-terser";
 export default {
 	input: 'dist\\service-worker.js',
 	output: {
-		file: 'dist\\service-worker.js',
+		file: 'dist/service-worker.js',
+		name: 'service-worker.js',
 		format: 'umd',
 		minifyInternalExports: true,
 		compact: true,
