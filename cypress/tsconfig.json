@@ -1,7 +1,7 @@
 {
 	"compilerOptions": {
 		"strict": true,
-		"baseUrl": "node_modules/",
+		"baseUrl": "../node_modules",
 		"target": "es5",
 		"lib": [
 			"es5",
@@ -9,13 +9,10 @@
 			"ES2015"
 		],
 		"types": [
-			"jest"
+			"cypress"
 		]
 	},
 	"include": [
-		"**/*.ts"
-	],
-	"exclude": [
-		"node_modules"
+		"**/*.e2e-spec.ts"
 	],
 }

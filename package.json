@@ -7,18 +7,19 @@
 		"build": "vite build && npm run service-worker",
 		"test": "jest",
 		"test:watch": "jest --watchAll",
-		"test:e2e": "concurrently \"npm:start\" \"cypress open\"",
-		"service-worker": "npx rollup -c \"rollup.config.js\""
+		"test:e2e": "concurrently --success \"first\" -k \"npm:start\" \"cypress run --headed\"",
+		"service-worker": "npx rollup -c \"rollup.config.js\"",
+		"check": "npm run test && npm run test:e2e"
 	},
 	"dependencies": {
 		"axios": "^0.19.2",
-		"vue": "^3.0.0-rc.1"
+		"vue": "^3.0.0-rc.10"
 	},
 	"devDependencies": {
 		"@rollup/plugin-node-resolve": "^9.0.0",
 		"@testing-library/vue": "^5.0.4",
 		"@types/jest": "^26.0.9",
-		"@vue/compiler-sfc": "^3.0.0-rc.1",
+		"@vue/compiler-sfc": "^3.0.0-rc.10",
 		"concurrently": "^5.3.0",
 		"cypress": "^5.0.0",
 		"jest": "^26.4.0",

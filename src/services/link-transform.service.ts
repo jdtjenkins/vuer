@@ -5,7 +5,7 @@ import axios from 'axios';
 import { FullLink } from '../interfaces/link.interface';
 
 export class LinkService {
-	public static async linkSwitch(link: string): Promise<FullLink> {
+	public static async linkSwitch(link: string): Promise<FullLink | null> {
 
 		if (link.includes('gfycat')){
 			return LinkService.gfycat(link);
@@ -59,15 +59,19 @@ export class LinkService {
 		if (
 			new RegExp('reddit.com\/u\/.*(\/?)$').test(link) ||
 			new RegExp('^u\/.*(\/?)$').test(link) ||
-			new RegExp('user\/.*(\/?)$').test(link)
+			new RegExp('^\/u\/.*(\/?)$').test(link) ||
+			new RegExp('user\/.*(\/?)$').test(link) ||
+			new RegExp('\/user\/.*(\/?)$').test(link)
 		) {
 			return LinkService.redditUser(link);
 		}
+
+		return null;
 	}
 
 	public static async gfycat(link: string): Promise<FullLink> {
 		let slug = link.split('/').pop();
-		slug = slug.replace('.gif', '');
+		slug = slug!.replace('.gif', '');
 
 		let apiData: AxiosResponse;
 
@@ -140,8 +144,8 @@ export class LinkService {
 
 	public static async imgur(link: string): Promise<FullLink> {
 		const fileName = link.split('/').pop();
-		const fileHash = fileName.split('.')[0];
-		const fileType = fileName.split('.').pop();
+		const fileHash = fileName!.split('.')[0];
+		const fileType = fileName!.split('.').pop();
 
 		if (fileType === 'gifv') {
 			let apiData: AxiosResponse;

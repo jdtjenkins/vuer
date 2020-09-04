@@ -1,3 +1,4 @@
+/// <reference types="jest" />
 import { LinkService } from './link-transform.service';
 
 describe('LinkStore', () => {

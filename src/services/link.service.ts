@@ -13,7 +13,7 @@ interface LinkStore {
 
 const generateLink: (id: number) => StateLink = (id: number): StateLink => ({
 	id,
-	link: null,
+	link: null as unknown as string,
 });
 
 
@@ -35,7 +35,7 @@ export const createState = (): LinkStore => {
 	const updateLink = (id: number, link: string): void => {
 		const linkToUpdate = links.find(link => link.id === id);
 
-		linkToUpdate.link = link;
+		linkToUpdate!.link = link;
 	}
 
 	const resetLink = (id: number): void => {
@@ -45,7 +45,7 @@ export const createState = (): LinkStore => {
 	}
 
 	const setState = (linksToSet: StateLink[]): void => {
-		linksToSet.forEach(link => updateLink(link.id, link.link));
+		linksToSet.forEach(link => updateLink(link.id!, link.link));
 	}
 
 	const comp = computed(() => {
@@ -62,4 +62,4 @@ export const createState = (): LinkStore => {
 	};
 };
 
-export const useState: () => LinkStore = () => inject(stateSymbol);
+export const useState: () => LinkStore = () => inject(stateSymbol) as LinkStore;
