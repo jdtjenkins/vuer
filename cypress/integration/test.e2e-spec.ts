@@ -1,3 +1,5 @@
+/// <reference types="cypress" />
+
 context('Links', () => {
 	beforeEach(() => {
 		cy.visit('http://localhost:3000');

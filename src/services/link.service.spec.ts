@@ -1,3 +1,4 @@
+/// <reference types="jest" />
 import { createState } from './link.service';
 
 // Interfaces
@@ -48,7 +49,7 @@ describe('LinkStore', () => {
 
 			expect(state.links[0]).toMatchObject(<StateLink>{
 				id: 1,
-				link: null,
+				link: null as unknown as string,
 			})
 		});
 	});

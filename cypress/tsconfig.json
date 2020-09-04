@@ -1,18 +1,19 @@
 {
 	"compilerOptions": {
 		"strict": true,
-		"baseUrl": "node_modules/",
+		"skipLibCheck": true,
+		"baseUrl": "../node_modules",
 		"target": "es5",
 		"lib": [
 			"es5",
 			"dom",
 			"ES2015"
+		],
+		"types": [
+			"cypress"
 		]
 	},
 	"include": [
-		"**/*.ts"
-	],
-	"exclude": [
-		"node_modules"
+		"**/*.e2e-spec.ts"
 	],
 }

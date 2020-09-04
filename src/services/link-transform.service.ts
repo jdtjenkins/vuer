@@ -5,7 +5,7 @@ import axios from 'axios';
 import { FullLink } from '../interfaces/link.interface';
 
 export class LinkService {
-	public static async linkSwitch(link: string): Promise<FullLink> {
+	public static async linkSwitch(link: string): Promise<FullLink | null> {
 
 		if (link.includes('gfycat')){
 			return LinkService.gfycat(link);
@@ -50,24 +50,28 @@ export class LinkService {
 		}
 
 		if (
-			new RegExp('reddit.com\/r\/.*(\/?)$').test(link) ||
-			new RegExp('^r\/.*(\/?)$').test(link)
+			new RegExp('reddit.com\/r\/.*(\/?)$', 'i').test(link) ||
+			new RegExp('^r\/.*(\/?)$', 'i').test(link)
 		) {
 			return LinkService.subreddit(link);
 		}
 
 		if (
-			new RegExp('reddit.com\/u\/.*(\/?)$').test(link) ||
-			new RegExp('^u\/.*(\/?)$').test(link) ||
-			new RegExp('user\/.*(\/?)$').test(link)
+			new RegExp('reddit.com\/u\/.*(\/?)$', 'i').test(link) ||
+			new RegExp('^u\/.*(\/?)$', 'i').test(link) ||
+			new RegExp('^\/u\/.*(\/?)$', 'i').test(link) ||
+			new RegExp('user\/.*(\/?)$', 'i').test(link) ||
+			new RegExp('\/user\/.*(\/?)$', 'i').test(link)
 		) {
 			return LinkService.redditUser(link);
 		}
+
+		return null;
 	}
 
 	public static async gfycat(link: string): Promise<FullLink> {
 		let slug = link.split('/').pop();
-		slug = slug.replace('.gif', '');
+		slug = slug!.replace('.gif', '');
 
 		let apiData: AxiosResponse;
 
@@ -86,7 +90,7 @@ export class LinkService {
 	}
 
 	public static async redgifs(link: string): Promise<FullLink> {
-		const iframeLink = link.replace('watch', 'ifr');
+		const iframeLink = link.split('-')[0].replace('watch', 'ifr');
 
 		return {
 			link,
@@ -140,8 +144,8 @@ export class LinkService {
 
 	public static async imgur(link: string): Promise<FullLink> {
 		const fileName = link.split('/').pop();
-		const fileHash = fileName.split('.')[0];
-		const fileType = fileName.split('.').pop();
+		const fileHash = fileName!.split('.')[0];
+		const fileType = fileName!.split('.').pop();
 
 		if (fileType === 'gifv') {
 			let apiData: AxiosResponse;

@@ -131,6 +131,7 @@
 				timer: null,
 				intervalTime: 30000,
 				error: null,
+				pause: false,
 			});
 
 			const getLinks = async () => {
@@ -158,10 +159,15 @@
 
 					try {
 						const link = child.data.url;
+
+						if (!link) {
+							continue;
+						}
+
 						const redditLink = `https://www.reddit.com${ child.data.permalink }`;
 						const linkData: LinkWithRedditLink = await LinkService.linkSwitch(link);
 
-						if (linkData === undefined) {
+						if (!linkData) {
 							continue;
 						}
 
@@ -182,7 +188,11 @@
 			}
 
 			const setTimer = (time = 10000) => {
-				stop();
+				reset();
+
+				if (data.pause) {
+					return;
+				}
 
 				data.timer = setInterval(async () => {
 					await forward();
@@ -209,10 +219,16 @@
 			}
 
 			const start = async () => {
+				data.pause = false;
 				setTimer();
 			}
 
 			const stop = async () => {
+				data.pause = true;
+				reset();
+			}
+
+			const reset = () => {
 				if (data.timer) {
 					clearInterval(data.timer);
 					data.timer = null;
@@ -221,7 +237,7 @@
 
 			const currentLink = computed(() => {
 				if (data.links.length) {
-					return toRef(data.links, data.currentCount);
+					return toRef(data.links, data.currentCount).value;
 				}
 			});
 
@@ -247,7 +263,7 @@
 				forward,
 				stop,
 				start,
-				currentLink: readonly(currentLink),
+				currentLink,
 				settingsModalName,
 				showSettingsModal,
 				hideSettingsModal,
