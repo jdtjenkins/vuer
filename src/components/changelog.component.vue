@@ -2,19 +2,26 @@
 	<div class="changelog">
 		<h2>Updates</h2>
 		<slot name="controls"></slot>
-		<section id="changelog-v2.0.2">
+		<section id="changelog-v2.1.1">
+			<h3>Version 2.1.1</h3>
+			<ul>
+				<li>Allows uppercase subreddit and reddit usernames eg: <pre>R/aww</pre> <pre>U/internet_adventures</pre></li>
+				<li>Reddit slideshow "pause" no longer gets reset when navigating forward/backward</li>
+			</ul>
+		</section>
+		<section id="changelog-v2.1.0">
 			<h3>Version 2.1.0</h3>
 			<ul>
 				<li>Adds sharing and importing boards 🔥</li>
 			</ul>
 		</section>
-		<section id="changelog-v2.0.2">
+		<section id="changelog-v2.0.3">
 			<h3>Version 2.0.3</h3>
 			<ul>
 				<li>Add start/stop button to subreddit/reddit user slideshows</li>
 			</ul>
 		</section>
-		<section id="changelog-v2.0.1">
+		<section id="changelog-v2.0.2">
 			<h3>Version 2.0.2</h3>
 			<ul>
 				<li>Add support for <pre>youtu.be</pre> links</li>

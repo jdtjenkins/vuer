@@ -50,18 +50,18 @@ export class LinkService {
 		}
 
 		if (
-			new RegExp('reddit.com\/r\/.*(\/?)$').test(link) ||
-			new RegExp('^r\/.*(\/?)$').test(link)
+			new RegExp('reddit.com\/r\/.*(\/?)$', 'i').test(link) ||
+			new RegExp('^r\/.*(\/?)$', 'i').test(link)
 		) {
 			return LinkService.subreddit(link);
 		}
 
 		if (
-			new RegExp('reddit.com\/u\/.*(\/?)$').test(link) ||
-			new RegExp('^u\/.*(\/?)$').test(link) ||
-			new RegExp('^\/u\/.*(\/?)$').test(link) ||
-			new RegExp('user\/.*(\/?)$').test(link) ||
-			new RegExp('\/user\/.*(\/?)$').test(link)
+			new RegExp('reddit.com\/u\/.*(\/?)$', 'i').test(link) ||
+			new RegExp('^u\/.*(\/?)$', 'i').test(link) ||
+			new RegExp('^\/u\/.*(\/?)$', 'i').test(link) ||
+			new RegExp('user\/.*(\/?)$', 'i').test(link) ||
+			new RegExp('\/user\/.*(\/?)$', 'i').test(link)
 		) {
 			return LinkService.redditUser(link);
 		}
@@ -90,7 +90,7 @@ export class LinkService {
 	}
 
 	public static async redgifs(link: string): Promise<FullLink> {
-		const iframeLink = link.replace('watch', 'ifr');
+		const iframeLink = link.split('-')[0].replace('watch', 'ifr');
 
 		return {
 			link,

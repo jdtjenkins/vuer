@@ -84,7 +84,7 @@
 			});
 
 			const updateLink = async (url: string): Promise<void> => {
-				const partialLink = await LinkService.linkSwitch(url.toLowerCase());
+				const partialLink = await LinkService.linkSwitch(url);
 
 				Object.assign(link, partialLink);
 
