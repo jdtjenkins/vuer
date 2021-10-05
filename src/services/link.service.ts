@@ -49,7 +49,6 @@ export const createState = (): LinkStore => {
 	}
 
 	const comp = computed(() => {
-		console.log(links)
 		return links
 	});
 
