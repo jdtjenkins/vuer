@@ -91,6 +91,16 @@
 				</button>
 			</div>
 		</div>
+		<div class="subreddit-mobile-controls">
+			<div class="controls">
+				<button @click="back">
+					<i>👈</i>
+				</button>
+				<button @click="forward">
+					<i>👉</i>
+				</button>
+			</div>
+		</div>
 	</div>
 </template>
 
@@ -279,33 +289,39 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
+		position: relative;
 
 		&:hover {
-			.subreddit-controls {
+			.subreddit-controls, .subreddit-mobile-controls {
 				opacity: 1;
+			}
+		}
+
+		a, button {
+			background: pink;
+			border: none;
+			border-radius: 100px;
+			cursor: pointer;
+			font-size: 0.9rem;
+			padding: 0.5rem 0.75rem;
+			color: #383F51;
+			box-shadow: 0 0 5px rgba(0,0,0,0.2);
+
+			@media screen and (min-width: 768px) {
+				font-size: 1rem;
+				padding: 0.5rem 1rem;
+			}
+
+			i {
+				display: inline-block;
+				line-height: 1rem;
+				font-style: initial;
 			}
 		}
 
 		.subreddit-controls {
 			opacity: 0;
 			transition: all .2s ease-in-out;
-
-			a, button {
-				background: pink;
-				border: none;
-				border-radius: 100px;
-				font-size: 1rem;
-				padding: 0.5rem 1rem;
-				cursor: pointer;
-				color: #383F51;
-				box-shadow: 0 0 5px rgba(0,0,0,0.2);
-
-				i {
-					display: inline-block;
-					line-height: 1rem;
-					font-style: initial;
-				}
-			}
 
 			a {
 				color: inherit;
@@ -349,11 +365,47 @@
 				display: block;
 				position: absolute;
 				top: 60px;
-				left: 18px;
+				left: 5px;
+				width: 100%;
 
 				@media screen and (min-width: 768px) {
 					display: none;
 				}
+
+				.controls {
+					position: absolute;
+					bottom: 0;
+					padding-left: 15px;
+					right: 18px;
+					width: 50%;
+					display: flex;
+					align-items: center;
+					justify-content: space-between;
+				}
+			}
+		}
+
+		.subreddit-mobile-controls {
+			opacity: 0;
+			transition: all .2s ease-in-out;
+			display: block;
+			position: absolute;
+			width: 100%;
+			height: 50%;
+			top: 50%;
+
+			@media screen and (min-width: 768px) {
+				display: none;
+			}
+
+			.controls {
+				position: absolute;
+				bottom: 15px;
+				left: 0;
+				width: 100%;
+				display: flex;
+				align-items: center;
+				justify-content: space-around;
 			}
 		}
 	}
