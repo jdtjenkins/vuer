@@ -42,7 +42,14 @@
 			type="button"
 			name="version"
 			class="version"
-			@click="showModal('changelog')">v2.2.0</button>
+			@click="showModal('changelog')">v2.2.1</button>
+		<a
+			class="nav-image"
+			target="_blank"
+			href="https://github.com/jdtjenkins/vuer"
+		>
+			<img src="/github.png">
+		</a>
 
 		<!-- Modals -->
 		<teleport to="#modals">
@@ -160,6 +167,10 @@
 			&.active {
 				background: #212529;
 			}
+		}
+
+		a.nav-image {
+			padding: 0.5rem 0;
 		}
 
 		.seperator {
