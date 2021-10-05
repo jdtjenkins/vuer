@@ -2,6 +2,12 @@
 	<div class="changelog">
 		<h2>Updates</h2>
 		<slot name="controls"></slot>
+		<section id="changelog-v2.2.0">
+			<h3>Version 2.2.0</h3>
+			<ul>
+				<li>Adds easier forward/back buttons on mobile for reddit slideshows</li>
+			</ul>
+		</section>
 		<section id="changelog-v2.1.2">
 			<h3>Version 2.1.2</h3>
 			<ul>

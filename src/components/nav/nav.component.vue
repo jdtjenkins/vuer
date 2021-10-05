@@ -42,7 +42,7 @@
 			type="button"
 			name="version"
 			class="version"
-			@click="showModal('changelog')">v2.1.1</button>
+			@click="showModal('changelog')">v2.2.0</button>
 
 		<!-- Modals -->
 		<teleport to="#modals">
