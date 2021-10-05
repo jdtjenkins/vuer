@@ -169,18 +169,26 @@
 			opacity: 0;
 			transition: all .2s ease-in-out;
 			background: rgba(0,0,0,0);
-			padding: 1rem;
 			z-index: 3;
+			padding-left: 5px;
+
+			@media screen and (min-width: 768px) {
+				padding: 1rem;
+			}
 
 			button {
 				background: pink;
 				border: none;
 				border-radius: 100px;
-				font-size: 1rem;
+				font-size: 0.9rem;
 				padding: 0.5rem 1rem;
 				cursor: pointer;
 				color: #383F51;
 				box-shadow: 0 0 5px rgba(0,0,0,0.2);
+
+				@media screen and (min-width: 768px) {
+					padding: 1rem;
+				}
 			}
 		}
 	}
