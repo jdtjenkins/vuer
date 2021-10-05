@@ -46,7 +46,7 @@
 </template>
 
 <script lang="ts">
-	import { reactive, readonly, defineAsyncComponent, SetupContext } from 'vue';
+	import { reactive, readonly, defineAsyncComponent, SetupContext, watch } from 'vue';
 
 	// Services
 	import { LinkService } from '../../services/link-transform.service';
@@ -104,18 +104,19 @@
 				})();
 			}
 
+			watch(
+				() => props.linkProp,
+				async newLink => {
+					resetLink();
+					await updateLink(newLink);
+				},
+			);
+
 			return {
 				link,
 				updateLink,
 				resetLink,
 			};
-		},
-		watch: {
-			linkProp(newLink, oldLink) {
-				if (!oldLink) {
-					this.updateLink(newLink);
-				}
-			}
 		},
 	}
 </script>
