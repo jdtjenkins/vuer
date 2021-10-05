@@ -2,6 +2,12 @@
 	<div class="changelog">
 		<h2>Updates</h2>
 		<slot name="controls"></slot>
+		<section id="changelog-v2.1.2">
+			<h3>Version 2.1.2</h3>
+			<ul>
+				<li>Fix bug where loading a board after loading a board doesn't work</li>
+			</ul>
+		</section>
 		<section id="changelog-v2.1.1">
 			<h3>Version 2.1.1</h3>
 			<ul>
