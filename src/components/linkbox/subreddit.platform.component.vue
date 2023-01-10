@@ -28,7 +28,7 @@
 					:href="currentLink.redditLink"
 					target="_blank"
 				>
-					<img src="snoo.png" class="reddit-logo">
+					<img src="/snoo.png" class="reddit-logo">
 					<span>{{ currentLink.redditTitle  }}</span>
 				</a>
 				<a
