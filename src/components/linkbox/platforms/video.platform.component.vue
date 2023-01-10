@@ -6,6 +6,7 @@
 		loop
 		muted
 		:poster="link.poster"
+		ref="video"
 	>
 		<source
 			v-if="link.mp4"
@@ -21,9 +22,23 @@
 </template>
 
 <script>
+	import { ref, onUpdated } from 'vue';
+
 	export default {
 		name: 'video-platform',
 		props: ['link'],
+
+		setup() {
+			const video = ref();
+
+			onUpdated(() => {
+				video.value?.load();
+			});
+
+			return {
+				video,
+			}
+		}
 	}
 </script>
 

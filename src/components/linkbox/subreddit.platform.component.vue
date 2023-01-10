@@ -27,25 +27,32 @@
 					:href="currentLink.redditLink"
 					target="_blank"
 				>
-					<i>Reddit</i>
+					Reddit post
 				</a>
 				<a
 					:href="currentLink.link"
 					target="_blank"
 				>
-					<i>👆</i>
+					Link
+				</a>
+				<a
+					class="reddit-user"
+					:href="currentLink.redditUserLink"
+					target="_blank"
+				>
+					u/{{ currentLink.redditUser }}
 				</a>
 				<button @click="back">
-					<i>👈</i>
+					Back
 				</button>
 				<button @click="forward">
-					<i>👉</i>
+					Next
 				</button>
 				<button @click="stop" v-if="data.timer">
-					<i>Stop</i>
+					Stop
 				</button>
 				<button @click="start" v-if="!data.timer">
-					<i>Start</i>
+					Start
 				</button>
 			</div>
 			<div class="mobile">
@@ -182,6 +189,8 @@
 						}
 
 						linkData.redditLink = redditLink;
+						linkData.redditUser = child.data.author;
+						linkData.redditUserLink = `https://www.reddit.com/u/${ child.data.author }`;
 
 						if (linkData) {
 							links.push(linkData);
@@ -214,6 +223,10 @@
 			}
 
 			const back = () => {
+				if (data.currentCount === 0) {
+					return;
+				}
+
 				data.currentCount--;
 				setTimer();
 			}
@@ -298,14 +311,15 @@
 		}
 
 		a, button {
-			background: pink;
-			border: none;
+			border: 1px solid white;
 			border-radius: 100px;
 			cursor: pointer;
 			font-size: 0.9rem;
 			padding: 0.5rem 0.75rem;
-			color: #383F51;
+			color: white;
 			box-shadow: 0 0 5px rgba(0,0,0,0.2);
+			background: transparent;
+			transition: border-color .1s ease-out;
 
 			@media screen and (min-width: 768px) {
 				font-size: 1rem;
@@ -317,6 +331,10 @@
 				line-height: 1rem;
 				font-style: initial;
 			}
+
+			&:hover {
+				border-color: lightcoral;
+			}
 		}
 
 		.subreddit-controls {
@@ -324,15 +342,12 @@
 			transition: all .2s ease-in-out;
 
 			a {
-				color: inherit;
 				text-decoration: none;
 			}
 
 			input {
 				border: none;
 				border-bottom: 1px solid #fff;
-				background: rgba(0,0,0,0.2);
-				color: #fff;
 				width: 100px;
 				text-align: center;
 			}

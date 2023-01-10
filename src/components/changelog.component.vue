@@ -2,6 +2,15 @@
 	<div class="changelog">
 		<h2>Updates</h2>
 		<slot name="controls"></slot>
+		<section id="changelog-v2.3">
+			<h3>Version 2.3</h3>
+			<ul>
+				<li>You now can't go "Back" on the first post in a subreddit</li>
+				<li>Updated some styling of the subreddit controls. Pink was getting a bit meh</li>
+				<li>Fixed the subreddit viewer not showing imgur videos consistently</li>
+				<li>Added a link to the author of a reddit post in the reddit viewer</li>
+			</ul>
+		</section>
 		<section id="changelog-v2.2.1">
 			<h3>Version 2.2.1</h3>
 			<ul>
@@ -103,7 +112,7 @@
 			<ul>
 				<li>Re-written in Vue 2</li>
 				<li>Adds basic subreddit support</li>
-				<li>Adds basic twitch support <pre>https://twitch.tv/claytonred</pre></li>
+				<li>Adds basic twitch support <pre>https://twitch.tv/LorelessGame</pre></li>
 			</ul>
 		</section>
 	</div>

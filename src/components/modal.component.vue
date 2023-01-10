@@ -53,7 +53,7 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		background-color: rgba(0,0,0,0.11);
+		background-color: rgba(0,0,0,0.2);
 		opacity: 0;
 		pointer-events: none;
 		z-index: 2;
