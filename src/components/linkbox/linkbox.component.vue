@@ -177,17 +177,17 @@
 			}
 
 			button {
-				background: pink;
-				border: none;
+				background: transparent;
+				border: 1px solid pink;
 				border-radius: 100px;
 				font-size: 0.9rem;
-				padding: 0.5rem 1rem;
+				padding: 0.25rem 0.5rem;
 				cursor: pointer;
-				color: #383F51;
+				color: pink;
 				box-shadow: 0 0 5px rgba(0,0,0,0.2);
 
 				@media screen and (min-width: 768px) {
-					padding: 1rem;
+					padding: 0.75rem 1rem;
 				}
 			}
 		}

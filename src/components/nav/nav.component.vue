@@ -42,7 +42,7 @@
 			type="button"
 			name="version"
 			class="version"
-			@click="showModal('changelog')">v2.2.1</button>
+			@click="showModal('changelog')">v2.3</button>
 		<a
 			class="nav-image"
 			target="_blank"

@@ -153,7 +153,7 @@ export class LinkService {
 			try {
 				apiData = await axios.get(`https://api.imgur.com/3/image/${ fileHash }`);
 			} catch(e) {
-				throw new Error(e);
+
 			}
 
 			return {
@@ -161,7 +161,7 @@ export class LinkService {
 				link,
 				platform: 'video',
 				transformedLink: link,
-				mp4: apiData.data.data.mp4,
+				mp4: apiData?.data?.data?.mp4 || `https://i.imgur.com/${ fileHash }.mp4`,
 			};
 		}
 
@@ -211,7 +211,7 @@ export class LinkService {
 		}
 	}
 
-	// https://www.twitch.tv/claytonred
+	// https://www.twitch.tv/LorelessGame
 	public static async twitch(link: string): Promise<FullLink> {
 		const viewKey = link.split('/').pop();
 
