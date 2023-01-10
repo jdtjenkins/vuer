@@ -24,10 +24,12 @@
 					v-model="data.intervalTime"
 				>
 				<a
+					class="reddit-link"
 					:href="currentLink.redditLink"
 					target="_blank"
 				>
-					Reddit post
+					<img src="snoo.png" class="reddit-logo">
+					<span>{{ currentLink.redditTitle  }}</span>
 				</a>
 				<a
 					:href="currentLink.link"
@@ -191,6 +193,7 @@
 						linkData.redditLink = redditLink;
 						linkData.redditUser = child.data.author;
 						linkData.redditUserLink = `https://www.reddit.com/u/${ child.data.author }`;
+						linkData.redditTitle = child.data.title;
 
 						if (linkData) {
 							links.push(linkData);
@@ -318,8 +321,8 @@
 			padding: 0.5rem 0.75rem;
 			color: white;
 			box-shadow: 0 0 5px rgba(0,0,0,0.2);
-			background: transparent;
-			transition: border-color .1s ease-out;
+			background: rgba(0,0,0,0.1);
+			transition: border-color, background-color .1s ease-out;
 
 			@media screen and (min-width: 768px) {
 				font-size: 1rem;
@@ -334,6 +337,7 @@
 
 			&:hover {
 				border-color: lightcoral;
+				background-color: rgba(0,0,0,0.2);
 			}
 		}
 
@@ -343,6 +347,34 @@
 
 			a {
 				text-decoration: none;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				gap: 0.5rem;
+
+				img.reddit-logo {
+					width: 21px;
+					height: 21px;
+					min-width: 21px;
+					min-height: 21px;
+					margin-bottom: 0 !important;
+				}
+
+				& > span {
+					max-width: 200px;
+					text-overflow: ellipsis;
+					white-space: nowrap;
+					overflow: hidden;
+
+				}
+
+				&.reddit-link {
+					border-color: #ff4500;
+
+					&:hover {
+						border-color: darken(#ff4500, 10%);
+					}
+				}
 			}
 
 			input {
