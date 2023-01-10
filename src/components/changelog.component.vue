@@ -2,6 +2,13 @@
 	<div class="changelog">
 		<h2>Updates</h2>
 		<slot name="controls"></slot>
+		<section id="changelog-v2.3.1">
+			<h3>Version 2.3.1</h3>
+			<ul>
+				<li>Adds Reddit post title to link button</li>
+				<li>Fixes some colours</li>
+			</ul>
+		</section>
 		<section id="changelog-v2.3">
 			<h3>Version 2.3</h3>
 			<ul>

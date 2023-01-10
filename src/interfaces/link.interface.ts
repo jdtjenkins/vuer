@@ -12,4 +12,5 @@ export interface FullLink extends StateLink {
 	mp4?: string;
 	redditUser?: string;
 	redditUserLink?: string;
+	redditTitle?: string;
 }
