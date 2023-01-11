@@ -160,7 +160,7 @@
 
 		.controls {
 			position: absolute;
-			top: 0;
+			top: 1rem;
 			left: 0;
 			width: 50%;
 			display: flex;
@@ -170,7 +170,7 @@
 			transition: all .2s ease-in-out;
 			background: rgba(0,0,0,0);
 			z-index: 3;
-			padding-left: 5px;
+			padding-left: 1rem;
 
 			@media screen and (min-width: 768px) {
 				padding: 1rem;
@@ -181,7 +181,7 @@
 				border: 1px solid pink;
 				border-radius: 100px;
 				font-size: 0.9rem;
-				padding: 0.25rem 0.5rem;
+				padding: 0.5rem 0.75rem;
 				cursor: pointer;
 				color: pink;
 				box-shadow: 0 0 5px rgba(0,0,0,0.2);
