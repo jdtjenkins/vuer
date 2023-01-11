@@ -11,7 +11,6 @@ export default defineConfig({
 		vue(),
 		basicSsl(),
 	],
-	base: '/vuer/',
 	server: {
 		port: 3000,
 		https: true,
@@ -20,6 +19,5 @@ export default defineConfig({
 	},
 	build: {
 		outDir: 'dist',
-		base: '',
 	}
 })
