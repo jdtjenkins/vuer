@@ -153,7 +153,7 @@ export class LinkService {
 			try {
 				apiData = await axios.get(`https://api.imgur.com/3/image/${ fileHash }`);
 			} catch(e) {
-
+				console.error(e);
 			}
 
 			return {

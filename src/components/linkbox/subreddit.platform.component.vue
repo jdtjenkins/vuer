@@ -17,13 +17,72 @@
 
 		<vuer-platform :link="currentLink" />
 
-		<div class="subreddit-controls">
-			<div class="desktop">
-				<input
-					type="number"
-					v-model="data.intervalTime"
-				>
-				<a
+		<div class="subreddit-controls subreddit-controls-desktop">
+			<input
+				type="number"
+				v-model="data.intervalTime"
+			>
+			<a
+				class="reddit-link"
+				:href="currentLink.redditLink"
+				target="_blank"
+			>
+				<img src="/snoo.png" class="reddit-logo">
+				<span>{{ currentLink.redditTitle  }}</span>
+			</a>
+			<a
+				:href="currentLink.link"
+				target="_blank"
+			>
+				Link
+			</a>
+			<a
+				class="reddit-user"
+				:href="currentLink.redditUserLink"
+				target="_blank"
+			>
+				u/{{ currentLink.redditUser }}
+			</a>
+			<button @click="back">
+				Back
+			</button>
+			<button @click="forward">
+				Next
+			</button>
+			<button @click="stop" v-if="data.timer">
+				Stop
+			</button>
+			<button @click="start" v-if="!data.timer">
+				Start
+			</button>
+		</div>
+		<div class="subreddit-controls subreddit-controls-mobile">
+			<div class="left">
+				<button @click="showSettingsModal">
+					<i>⚙</i>
+					<teleport to="#modals">
+						<vuer-modal :name="settingsModalName">
+							<div class="modal-controls">
+								<input
+									type="number"
+									v-model="data.intervalTime"
+								>
+								<button @click="stop" v-if="data.timer">
+									<i>Stop</i>
+								</button>
+								<button @click="start" v-if="!data.timer">
+									<i>Start</i>
+								</button>
+								<button class="close" @click.prevent.self="hideSettingsModal">
+									Close
+								</button>
+							</div>
+						</vuer-modal>
+					</teleport>
+				</button>
+			</div>
+			<div class="right">
+					<a
 					class="reddit-link"
 					:href="currentLink.redditLink"
 					target="_blank"
@@ -44,69 +103,15 @@
 				>
 					u/{{ currentLink.redditUser }}
 				</a>
+			</div>
+		</div>
+		<div class="subreddit-controls subreddit-mobile-controls">
+			<div class="controls">
 				<button @click="back">
 					Back
 				</button>
 				<button @click="forward">
 					Next
-				</button>
-				<button @click="stop" v-if="data.timer">
-					Stop
-				</button>
-				<button @click="start" v-if="!data.timer">
-					Start
-				</button>
-			</div>
-			<div class="mobile">
-				<button @click="showSettingsModal">
-					<i>⚙</i>
-					<teleport to="#modals">
-						<vuer-modal :name="settingsModalName">
-							<div class="modal-controls">
-								<input
-									type="number"
-									v-model="data.intervalTime"
-								>
-								<a
-									:href="currentLink.redditLink"
-									target="_blank"
-								>
-									<i>Reddit</i>
-								</a>
-								<a
-									:href="currentLink.link"
-									target="_blank"
-								>
-									Go to link <i>👆</i>
-								</a>
-								<button @click="back">
-									Back <i>👈</i>
-								</button>
-								<button @click="forward">
-									Next <i>👉</i>
-								</button>
-								<button @click="stop" v-if="data.timer">
-									<i>Stop</i>
-								</button>
-								<button @click="start" v-if="!data.timer">
-									<i>Start</i>
-								</button>
-								<button class="close" @click.prevent.self="hideSettingsModal">
-									Close
-								</button>
-							</div>
-						</vuer-modal>
-					</teleport>
-				</button>
-			</div>
-		</div>
-		<div class="subreddit-mobile-controls">
-			<div class="controls">
-				<button @click="back">
-					<i>👈</i>
-				</button>
-				<button @click="forward">
-					<i>👉</i>
 				</button>
 			</div>
 		</div>
@@ -321,7 +326,7 @@
 			padding: 0.5rem 0.75rem;
 			color: white;
 			box-shadow: 0 0 5px rgba(0,0,0,0.2);
-			background: rgba(0,0,0,0.1);
+			background: rgba(0,0,0,0.5);
 			transition: border-color, background-color .1s ease-out;
 
 			@media screen and (min-width: 768px) {
@@ -347,10 +352,11 @@
 
 			a {
 				text-decoration: none;
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				gap: 0.5rem;
+				display: block;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				overflow: hidden;
+				text-align: center;
 
 				img.reddit-logo {
 					width: 21px;
@@ -358,14 +364,15 @@
 					min-width: 21px;
 					min-height: 21px;
 					margin-bottom: 0 !important;
+					margin-right: 0.5rem;
 				}
 
 				& > span {
 					max-width: 200px;
-					text-overflow: ellipsis;
-					white-space: nowrap;
-					overflow: hidden;
+				}
 
+				& > * {
+					vertical-align: middle;
 				}
 
 				&.reddit-link {
@@ -377,6 +384,10 @@
 				}
 			}
 
+			*:not(:last-child) {
+				margin-bottom: 0.5rem;
+			}
+
 			input {
 				border: none;
 				border-bottom: 1px solid #fff;
@@ -384,7 +395,7 @@
 				text-align: center;
 			}
 
-			.desktop {
+			&.subreddit-controls-desktop {
 				position: absolute;
 				top: 0;
 				left: 0;
@@ -393,7 +404,6 @@
 				display: flex;
 				align-items: flex-end;
 				justify-content: flex-start;
-				background: rgba(0,0,0,0);
 				padding: 1rem;
 				z-index: 2;
 				flex-direction: column;
@@ -402,32 +412,34 @@
 				@media screen and (min-width: 768px) {
 					display: flex;
 				}
-
-				*:not(:last-child) {
-					margin-bottom: 0.5rem;
-				}
 			}
 
-			.mobile {
-				display: block;
+			&.subreddit-controls-mobile {
 				position: absolute;
-				top: 60px;
-				left: 5px;
 				width: 100%;
+				height: 100%;
+				top: 0;
+				left: 0;
+				display: flex;
+				align-items: flex-start;
+				justify-content: center;
+				gap: 0.5rem;
+
+				.left {
+					position: absolute;
+					left: 1rem;
+					top: 60px;
+				}
+
+				.right {
+					position: absolute;
+					bottom: 5rem;
+					right: 1rem;
+					width: 50%;
+				}
 
 				@media screen and (min-width: 768px) {
 					display: none;
-				}
-
-				.controls {
-					position: absolute;
-					bottom: 0;
-					padding-left: 15px;
-					right: 18px;
-					width: 50%;
-					display: flex;
-					align-items: center;
-					justify-content: space-between;
 				}
 			}
 		}
