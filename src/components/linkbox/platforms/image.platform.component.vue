@@ -21,7 +21,6 @@
 			}));
 
 			image.onload = () => {
-				console.log(image.naturalHeight > image.naturalWidth);
 				isImagePortrait.value = image.value?.naturalHeight > image.value?.naturalWidth;
 			};
 
@@ -36,12 +35,20 @@
 
 <style lang="scss" scoped>
 	img {
-		height: 100%;
-		object-fit: contain;
+		min-height: 100%;
+		min-width: 100%;
+		object-fit: cover;
 		object-position: center;
 
 		&.landscape {
 			width: 100%;
+		}
+
+		@media screen and (min-width: 768px) {
+			min-height: auto;
+			max-width: 100%;
+			max-height: 100%;
+			object-fit: contain;
 		}
 	}
 </style>
