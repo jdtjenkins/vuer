@@ -340,13 +340,11 @@
 		position: relative;
 		overflow: hidden;
 
-		&:hover {
-			.subreddit-controls-desktop {
-				opacity: 1;
+		@media screen and (min-width: 768px) {
+			&:hover {
+				.controls {
+					opacity: 1;
 				pointer-events: all;
-
-				@media screen and (min-width: 768px) {
-					display: flex;
 				}
 			}
 		}

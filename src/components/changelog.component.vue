@@ -2,11 +2,18 @@
 	<div class="changelog">
 		<h2>Updates</h2>
 		<slot name="controls"></slot>
+		<section id="changelog-v2.5.1">
+			<h3>Version 2.5</h3>
+			<ul>
+				<li>Fix mobile controls still showing on hover</li>
+			</ul>
+		</section>
 		<section id="changelog-v2.5">
 			<h3>Version 2.5</h3>
 			<ul>
 				<li>Makes videos and images always fill the box on mobile</li>
 				<li>Add tap to hide/show controls on mobile</li>
+				<li>Adds loading spinner to subreddit slideshow when you go backwards or forwards</li>
 			</ul>
 		</section>
 		<section id="changelog-v2.4">
