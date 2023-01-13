@@ -44,8 +44,16 @@
 
 <style lang="scss" scoped>
 	video {
-		max-height: 100%;
-		object-fit: contain;
+		min-height: 100%;
+		min-width: 100%;
+		object-fit: cover;
 		object-position: center;
+
+		@media screen and (min-width: 768px) {
+			min-height: auto;
+			max-width: 100%;
+			max-height: 100%;
+			object-fit: contain;
+		}
 	}
 </style>

@@ -2,6 +2,7 @@
 	<div
 		v-if="currentLink"
 		class="wrapper"
+		ref="wrapper"
 	>
 		<p
 			v-if="data.error"
@@ -14,6 +15,11 @@
 				class="italic"
 			>{{ link }}</a>
 		</p>
+
+		<div
+			class="loading"
+			:class="{ 'show-loading': data.showLoading }"
+		></div>
 
 		<vuer-platform :link="currentLink" />
 
@@ -43,22 +49,25 @@
 			>
 				u/{{ currentLink.redditUser }}
 			</a>
-			<button @click="back">
+			<button @pointerup="back">
 				Back
 			</button>
-			<button @click="forward">
+			<button @pointerup="forward">
 				Next
 			</button>
-			<button @click="stop" v-if="data.timer">
+			<button @pointerup="stop" v-if="data.timer">
 				Stop
 			</button>
-			<button @click="start" v-if="!data.timer">
+			<button @pointerup="start" v-if="!data.timer">
 				Start
 			</button>
 		</div>
-		<div class="subreddit-controls subreddit-controls-mobile">
+		<div
+			class="subreddit-controls subreddit-controls-mobile"
+			:class="{ 'show-controls': showControls }"
+		>
 			<div class="left">
-				<button @click="showSettingsModal">
+				<button @pointerup.stop.prevent="showSettingsModal">
 					<i>⚙</i>
 					<teleport to="#modals">
 						<vuer-modal :name="settingsModalName">
@@ -67,13 +76,13 @@
 									type="number"
 									v-model="data.intervalTime"
 								>
-								<button @click="stop" v-if="data.timer">
+								<button @pointerup="stop" v-if="data.timer">
 									<i>Stop</i>
 								</button>
-								<button @click="start" v-if="!data.timer">
+								<button @pointerup="start" v-if="!data.timer">
 									<i>Start</i>
 								</button>
-								<button class="close" @click.prevent.self="hideSettingsModal">
+								<button class="close" @pointerup.stop.prevent.self="hideSettingsModal">
 									Close
 								</button>
 							</div>
@@ -82,10 +91,11 @@
 				</button>
 			</div>
 			<div class="right">
-					<a
+				<a
 					class="reddit-link"
 					:href="currentLink.redditLink"
 					target="_blank"
+					@pointerup.stop.prevent
 				>
 					<img src="/snoo.png" class="reddit-logo">
 					<span>{{ currentLink.redditTitle  }}</span>
@@ -93,6 +103,7 @@
 				<a
 					:href="currentLink.link"
 					target="_blank"
+					@pointerup.stop.prevent
 				>
 					Link
 				</a>
@@ -100,17 +111,16 @@
 					class="reddit-user"
 					:href="currentLink.redditUserLink"
 					target="_blank"
+					@pointerup.stop.prevent
 				>
 					u/{{ currentLink.redditUser }}
 				</a>
 			</div>
-		</div>
-		<div class="subreddit-controls subreddit-mobile-controls">
-			<div class="controls">
-				<button @click="back">
+			<div class="bottom">
+				<button @pointerup.stop.prevent="back">
 					Back
 				</button>
-				<button @click="forward">
+				<button @pointerup.stop.prevent="forward">
 					Next
 				</button>
 			</div>
@@ -139,12 +149,12 @@
 
 	export default {
 		name: 'subreddit-platform',
-		props: ['link'],
+		props: ['link', 'showControls'],
 		components: {
 			'vuer-platform': PlatformComponent,
 			'vuer-modal': VuerModal,
 		},
-		async setup(props: {link: string}, context: {emit: (...args: unknown[]) => void}) {
+		async setup(props: {link: string, showControls: boolean}, context: {emit: (...args: unknown[]) => void}) {
 			const data = reactive({
 				link: props.link,
 				links: [],
@@ -156,7 +166,10 @@
 				intervalTime: 30000,
 				error: null,
 				pause: false,
+				showLoading: false,
 			});
+
+			const wrapper = ref();
 
 			const getLinks = async () => {
 				let response;
@@ -230,6 +243,12 @@
 				return performance.now();
 			}
 
+			const showLoader = () => {
+				data.showLoading = true;
+
+				setTimeout(() => data.showLoading = false, 200);
+			}
+
 			const back = () => {
 				if (data.currentCount === 0) {
 					return;
@@ -237,6 +256,7 @@
 
 				data.currentCount--;
 				setTimer();
+				showLoader();
 			}
 
 			const forward = async () => {
@@ -247,14 +267,20 @@
 				data.currentCount++;
 
 				setTimer();
+				showLoader();
 			}
 
-			const start = async () => {
+			const start = async (event) => {
+				event.preventDefault();
+				event.stopPropagation();
+				console.log(event);
 				data.pause = false;
 				setTimer();
 			}
 
-			const stop = async () => {
+			const stop = async (event) => {
+				event.preventDefault();
+				event.stopPropagation();
 				data.pause = true;
 				reset();
 			}
@@ -298,6 +324,7 @@
 				settingsModalName,
 				showSettingsModal,
 				hideSettingsModal,
+				wrapper,
 			}
 		},
 	}
@@ -311,10 +338,16 @@
 		align-items: center;
 		justify-content: center;
 		position: relative;
+		overflow: hidden;
 
 		&:hover {
-			.subreddit-controls, .subreddit-mobile-controls {
+			.subreddit-controls-desktop {
 				opacity: 1;
+				pointer-events: all;
+
+				@media screen and (min-width: 768px) {
+					display: flex;
+				}
 			}
 		}
 
@@ -349,6 +382,7 @@
 		.subreddit-controls {
 			opacity: 0;
 			transition: all .2s ease-in-out;
+			pointer-events: none;
 
 			a {
 				text-decoration: none;
@@ -407,11 +441,6 @@
 				padding: 1rem;
 				z-index: 2;
 				flex-direction: column;
-				display: none;
-
-				@media screen and (min-width: 768px) {
-					display: flex;
-				}
 			}
 
 			&.subreddit-controls-mobile {
@@ -424,6 +453,11 @@
 				align-items: flex-start;
 				justify-content: center;
 				gap: 0.5rem;
+
+				&.show-controls {
+					opacity: 1;
+					pointer-events: all;
+				}
 
 				.left {
 					position: absolute;
@@ -438,33 +472,19 @@
 					width: 50%;
 				}
 
+				.bottom {
+					position: absolute;
+					bottom: 15px;
+					left: 0;
+					width: 100%;
+					display: flex;
+					align-items: center;
+					justify-content: space-around;
+				}
+
 				@media screen and (min-width: 768px) {
 					display: none;
 				}
-			}
-		}
-
-		.subreddit-mobile-controls {
-			opacity: 0;
-			transition: all .2s ease-in-out;
-			display: block;
-			position: absolute;
-			width: 100%;
-			height: 50%;
-			top: 50%;
-
-			@media screen and (min-width: 768px) {
-				display: none;
-			}
-
-			.controls {
-				position: absolute;
-				bottom: 15px;
-				left: 0;
-				width: 100%;
-				display: flex;
-				align-items: center;
-				justify-content: space-around;
 			}
 		}
 	}
@@ -484,6 +504,51 @@
 			&:hover {
 				color: darken(pink, 20%);
 			}
+		}
+	}
+
+	.loading {
+		width: 48px;
+		height: 48px;
+		display: inline-block;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translateY(-50%) translateX(-50%);
+		opacity: 0;
+
+		&.show-loading {
+			opacity: 1;
+		}
+	}
+
+	.loading::after,
+	.loading::before {
+		content: '';
+		box-sizing: border-box;
+		width: 48px;
+		height: 48px;
+		border-radius: 50%;
+		border: 2px solid pink;
+		position: absolute;
+		left: 0;
+		top: 0;
+		animation: animloading 2s linear infinite;
+
+	}
+
+	.loading::after {
+		animation-delay: 1s;
+	}
+
+	@keyframes animloading {
+		0% {
+			transform: scale(0);
+			opacity: 1;
+		}
+		100% {
+			transform: scale(1);
+			opacity: 0;
 		}
 	}
 

@@ -2,6 +2,20 @@
 	<div class="changelog">
 		<h2>Updates</h2>
 		<slot name="controls"></slot>
+		<section id="changelog-v2.5">
+			<h3>Version 2.5</h3>
+			<ul>
+				<li>Makes videos and images always fill the box on mobile</li>
+				<li>Add tap to hide/show controls on mobile</li>
+			</ul>
+		</section>
+		<section id="changelog-v2.4">
+			<h3>Version 2.4</h3>
+			<ul>
+				<li>Improves subreddit slideshow control styles on mobile</li>
+				<li>Makes images appear bigger</li>
+			</ul>
+		</section>
 		<section id="changelog-v2.3.1">
 			<h3>Version 2.3.1</h3>
 			<ul>

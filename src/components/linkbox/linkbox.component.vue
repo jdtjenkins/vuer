@@ -1,8 +1,12 @@
 <template>
-	<div class="linkbox">
+	<div
+		class="linkbox"
+		@pointerup.stop.prevent="toggleControls"
+	>
 		<div
 			v-if="link.link"
 			class="controls"
+			:class="{ 'show-controls': showControls }"
 		>
 			<button
 				type="button"
@@ -39,6 +43,7 @@
 			<subreddit-platform
 				v-if="link.platform === 'subreddit'"
 				:link="link.transformedLink"
+				:show-controls="showControls"
 			></subreddit-platform>
 		</Suspense>
 
@@ -46,7 +51,7 @@
 </template>
 
 <script lang="ts">
-	import { reactive, readonly, defineAsyncComponent, SetupContext, watch } from 'vue';
+	import { reactive, readonly, defineAsyncComponent, SetupContext, watch, ref } from 'vue';
 
 	// Services
 	import { LinkService } from '../../services/link-transform.service';
@@ -76,6 +81,7 @@
 			},
 			context: SetupContext,
 		) {
+			let showControls = ref(true);
 			let link = reactive(<FullLink>{
 				link: null,
 				platform: null,
@@ -112,10 +118,16 @@
 				},
 			);
 
+			const toggleControls = () => {
+				showControls.value = !showControls.value;
+			}
+
 			return {
 				link,
 				updateLink,
 				resetLink,
+				showControls,
+				toggleControls,
 			};
 		},
 	}
@@ -129,9 +141,11 @@
 		width: 100%;
 		height: 100%;
 
-		&:hover {
-			.controls {
-				opacity: 1;
+		@media screen and (min-width: 768px) {
+			&:hover {
+				.controls {
+					opacity: 1;
+				}
 			}
 		}
 
@@ -172,6 +186,10 @@
 			z-index: 3;
 			padding-left: 1rem;
 
+			&.show-controls {
+				opacity: 1;
+			}
+
 			@media screen and (min-width: 768px) {
 				padding: 1rem;
 			}
@@ -185,6 +203,7 @@
 				cursor: pointer;
 				color: pink;
 				box-shadow: 0 0 5px rgba(0,0,0,0.2);
+				background-color: rgba(0,0,0,0.3);
 
 				@media screen and (min-width: 768px) {
 					padding: 0.75rem 1rem;
