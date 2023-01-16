@@ -22,14 +22,25 @@
 </template>
 
 <script>
-	import { ref, onUpdated } from 'vue';
+	import { ref, onUpdated, watchEffect } from 'vue';
 
 	export default {
 		name: 'video-platform',
 		props: ['link'],
 
-		setup() {
+		setup(_, ctx) {
 			const video = ref();
+
+			watchEffect(() => {
+				if (!video.value) {
+					return;
+				}
+
+				video.value.addEventListener('loadeddata', () => {
+					console.warn('loaded')
+					ctx.emit('loaded');
+				});
+			})
 
 			onUpdated(() => {
 				video.value?.load();
@@ -48,6 +59,7 @@
 		min-width: 100%;
 		object-fit: cover;
 		object-position: center;
+		pointer-events: none;
 
 		@media screen and (min-width: 768px) {
 			min-height: auto;

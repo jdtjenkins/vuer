@@ -2,8 +2,16 @@
 	<div class="changelog">
 		<h2>Updates</h2>
 		<slot name="controls"></slot>
+		<section id="changelog-v2.5.2">
+			<h3>Version 2.5.2</h3>
+			<ul>
+				<li>Stop being able to click mobile controls whilst the controls are hidden</li>
+				<li>Stop being able to click on the videos loaded. This is to make sure the controls always show correctly</li>
+				<li>Fix loading spinner actually checking for the media loading properly</li>
+			</ul>
+		</section>
 		<section id="changelog-v2.5.1">
-			<h3>Version 2.5</h3>
+			<h3>Version 2.5.1</h3>
 			<ul>
 				<li>Fix mobile controls still showing on hover</li>
 			</ul>
