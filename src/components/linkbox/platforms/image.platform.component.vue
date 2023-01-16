@@ -12,7 +12,7 @@
     export default {
         name: 'image-platform',
 		props: ['link'],
-		setup(props) {
+		setup(props, ctx) {
 			const image = new Image();
 			const isImagePortrait = ref(false);
 			const imageClasses = computed(() => ({
@@ -22,6 +22,8 @@
 
 			image.onload = () => {
 				isImagePortrait.value = image.value?.naturalHeight > image.value?.naturalWidth;
+				console.warn('loaded')
+				ctx.emit('loaded');
 			};
 
 			image.src = props.link;
@@ -39,6 +41,7 @@
 		min-width: 100%;
 		object-fit: cover;
 		object-position: center;
+		pointer-events: none;
 
 		&.landscape {
 			width: 100%;

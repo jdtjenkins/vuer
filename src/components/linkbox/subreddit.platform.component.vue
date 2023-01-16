@@ -21,7 +21,10 @@
 			:class="{ 'show-loading': data.showLoading }"
 		></div>
 
-		<vuer-platform :link="currentLink" />
+		<vuer-platform
+			:link="currentLink"
+			@loaded="hideLoader"
+		/>
 
 		<div class="subreddit-controls subreddit-controls-desktop">
 			<input
@@ -245,8 +248,10 @@
 
 			const showLoader = () => {
 				data.showLoading = true;
+			}
 
-				setTimeout(() => data.showLoading = false, 200);
+			const hideLoader = () => {
+				data.showLoading = false;
 			}
 
 			const back = () => {
@@ -273,7 +278,6 @@
 			const start = async (event) => {
 				event.preventDefault();
 				event.stopPropagation();
-				console.log(event);
 				data.pause = false;
 				setTimer();
 			}
@@ -325,6 +329,7 @@
 				showSettingsModal,
 				hideSettingsModal,
 				wrapper,
+				hideLoader,
 			}
 		},
 	}
@@ -342,9 +347,9 @@
 
 		@media screen and (min-width: 768px) {
 			&:hover {
-				.controls {
+				.subreddit-controls {
 					opacity: 1;
-				pointer-events: all;
+					pointer-events: all;
 				}
 			}
 		}
@@ -380,7 +385,6 @@
 		.subreddit-controls {
 			opacity: 0;
 			transition: all .2s ease-in-out;
-			pointer-events: none;
 
 			a {
 				text-decoration: none;
@@ -451,6 +455,7 @@
 				align-items: flex-start;
 				justify-content: center;
 				gap: 0.5rem;
+				pointer-events: none;
 
 				&.show-controls {
 					opacity: 1;
