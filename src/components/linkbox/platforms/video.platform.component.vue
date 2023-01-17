@@ -57,6 +57,7 @@
 	video {
 		min-height: 100%;
 		min-width: 100%;
+		max-width: 150%;
 		object-fit: cover;
 		object-position: center;
 		pointer-events: none;

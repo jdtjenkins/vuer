@@ -119,7 +119,7 @@
 			);
 
 			const toggleControls = () => {
-				showControls.value = !showControls.value;
+				setTimeout(() => showControls.value = !showControls.value, 100);
 			}
 
 			return {
