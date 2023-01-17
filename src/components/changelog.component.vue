@@ -2,6 +2,12 @@
 	<div class="changelog">
 		<h2>Updates</h2>
 		<slot name="controls"></slot>
+		<section id="changelog-v2.5.3">
+			<h3>Version 2.5.3</h3>
+			<ul>
+				<li>Stop being able to click mobile controls whilst the controls are hidden for reals this time</li>
+			</ul>
+		</section>
 		<section id="changelog-v2.5.2">
 			<h3>Version 2.5.2</h3>
 			<ul>
